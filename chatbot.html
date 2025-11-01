@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrightBot - Recruitment FAQ Chat</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f3f6fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+    h1 {
+      color: #2d2f31;
+    }
+    #chatbox {
+      width: 90%;
+      max-width: 600px;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      height: 500px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+    .message {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+      line-height: 1.4em;
+    }
+    .user {
+      background: #0078d7;
+      color: white;
+      text-align: right;
+    }
+    .bot {
+      background: #e5e5ea;
+      color: black;
+    }
+    #input-area {
+      width: 90%;
+      max-width: 600px;
+      display: flex;
+      gap: 10px;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background: #0078d7;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💬 BrightBot Recruitment FAQ</h1>
+  <div id="chatbox">
+    <div class="message bot">Hi! 👋 I'm BrightBot. Ask me about recruitment, interviews, or onboarding!</div>
+  </div>
+
+  <div id="input-area">
+    <input type="text" id="user-input" placeholder="Type your question here..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    // --- FAQ Knowledge Base ---
+    const faq = {
+      "how can i apply": "You can apply through our Careers page by clicking 'Apply' and uploading your resume.",
+      "apply multiple": "Yes! You can apply for more than one position if you meet the qualifications.",
+      "after i apply": "Our HR team reviews your application and will contact you if you're shortlisted.",
+      "interview format": "We conduct online, phone, or in-person interviews depending on the role.",
+      "assessment": "Some roles include an online or written test as part of the hiring process.",
+      "how long": "The full recruitment process usually takes about 4–6 weeks.",
+      "offer letter": "Offers are sent within 1–2 weeks after your final interview.",
+      "background check": "Yes, all employees undergo a standard background verification.",
+      "equal opportunity": "We are an equal opportunity employer and treat all applicants fairly.",
+      "contact": "You can reach our HR team at careers@yourcompany.com or call +94 11 123 4567."
+    };
+
+    function sendMessage() {
+      const inputField = document.getElementById("user-input");
+      const userText = inputField.value.trim();
+      if (!userText) return;
+
+      appendMessage(userText, "user");
+      inputField.value = "";
+
+      setTimeout(() => {
+        const response = getBotResponse(userText.toLowerCase());
+        appendMessage(response, "bot");
+      }, 400);
+    }
+
+    function appendMessage(text, sender) {
+      const chatbox = document.getElementById("chatbox");
+      const msgDiv = document.createElement("div");
+      msgDiv.classList.add("message", sender);
+      msgDiv.textContent = text;
+      chatbox.appendChild(msgDiv);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function getBotResponse(input) {
+      for (const key in faq) {
+        if (input.includes(key)) {
+          return faq[key];
+        }
+      }
+      return "Sorry, I don't have an answer for that yet. Try asking about applications, interviews, or offers!";
+    }
+
+    document.getElementById("user-input").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+
+</body>
+</html>
