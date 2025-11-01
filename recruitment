@@ -1,0 +1,13 @@
+recruitment-faq/
+│
+├── README.md                # Main overview
+├── faq/
+│   ├── recruitment-faq.md   # Main FAQ in Markdown
+│   ├── recruitment-faq.csv  # CSV version for chatbot/HRIS
+│   └── schema.json          # FAQ Schema (for SEO/web)
+│
+├── .github/
+│   └── workflows/
+│       └── update.yml       # Optional automation (future)
+│
+└── LICENSE                  # Optional (MIT recommended)
