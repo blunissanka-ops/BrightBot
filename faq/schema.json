@@ -1,0 +1,46 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How can I apply for a job at Your Company?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Visit our Careers page, select the role that matches your skills, and click Apply. You can upload your resume directly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens after I submit my application?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our recruitment team reviews your application. If shortlisted, you'll receive an invitation for a screening or interview."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does the hiring process take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The complete hiring process usually takes 4–6 weeks depending on the role."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you hire international candidates?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, certain positions are open to international candidates who meet eligibility and visa requirements."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I contact the recruitment team?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can reach us at careers@yourcompany.com or by calling +94 11 123 4567."
+      }
+    }
+  ]
+}
