@@ -3,134 +3,139 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrightBot - Recruitment FAQ Chat</title>
+  <title>BrightBot – Recruitment FAQ Chatbot</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f3f6fa;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f7f9fb;
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 30px;
+      height: 100vh;
     }
-    h1 {
-      color: #2d2f31;
+    header {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.4rem;
     }
-    #chatbox {
-      width: 90%;
-      max-width: 600px;
-      background: white;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      height: 500px;
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
       overflow-y: auto;
-      margin-bottom: 20px;
     }
     .message {
-      margin: 10px 0;
-      padding: 10px;
-      border-radius: 10px;
-      line-height: 1.4em;
+      max-width: 70%;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      margin: 0.5rem 0;
+      line-height: 1.4;
     }
     .user {
-      background: #0078d7;
-      color: white;
-      text-align: right;
+      background-color: #dcf8c6;
+      align-self: flex-end;
     }
     .bot {
-      background: #e5e5ea;
-      color: black;
+      background-color: #e5e5ea;
+      align-self: flex-start;
     }
-    #input-area {
-      width: 90%;
-      max-width: 600px;
+    .input-area {
       display: flex;
-      gap: 10px;
+      padding: 0.8rem;
+      background-color: #fff;
+      border-top: 1px solid #ccc;
     }
     input {
       flex: 1;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 0.8rem;
       border: 1px solid #ccc;
-      font-size: 16px;
+      border-radius: 6px;
+      outline: none;
+      font-size: 1rem;
     }
     button {
-      background: #0078d7;
+      margin-left: 0.5rem;
+      padding: 0.8rem 1rem;
+      background-color: #003366;
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
     }
     button:hover {
-      background: #005fa3;
+      background-color: #0055aa;
     }
   </style>
 </head>
 <body>
-
-  <h1>💬 BrightBot Recruitment FAQ</h1>
-  <div id="chatbox">
-    <div class="message bot">Hi! 👋 I'm BrightBot. Ask me about recruitment, interviews, or onboarding!</div>
+  <header>🤖 BrightBot – Recruitment & Talent FAQ Chat</header>
+  <div class="chat-container" id="chat">
+    <div class="message bot">
+      Hi 👋 I’m BrightBot! Ask me anything about recruitment, job openings, or interviews.
+    </div>
   </div>
-
-  <div id="input-area">
-    <input type="text" id="user-input" placeholder="Type your question here..." />
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="Type your question..." />
     <button onclick="sendMessage()">Send</button>
   </div>
 
   <script>
-    // --- FAQ Knowledge Base ---
-    const faq = {
-      "how can i apply": "You can apply through our Careers page by clicking 'Apply' and uploading your resume.",
-      "apply multiple": "Yes! You can apply for more than one position if you meet the qualifications.",
-      "after i apply": "Our HR team reviews your application and will contact you if you're shortlisted.",
-      "interview format": "We conduct online, phone, or in-person interviews depending on the role.",
-      "assessment": "Some roles include an online or written test as part of the hiring process.",
-      "how long": "The full recruitment process usually takes about 4–6 weeks.",
-      "offer letter": "Offers are sent within 1–2 weeks after your final interview.",
-      "background check": "Yes, all employees undergo a standard background verification.",
-      "equal opportunity": "We are an equal opportunity employer and treat all applicants fairly.",
-      "contact": "You can reach our HR team at careers@yourcompany.com or call +94 11 123 4567."
+    const faqs = {
+      "job openings": "You can find our current job openings on the Careers page. Visit careers.brightbot.lk.",
+      "apply": "To apply, visit our Careers page and submit your resume through the online form.",
+      "interview process": "Our interview process includes an initial screening, HR interview, and technical round (if applicable).",
+      "requirements": "Job requirements vary by role, but typically include relevant education and experience. Check the job description for details.",
+      "internship": "Yes! We offer internship opportunities for university students. Check the 'Internships' section on our Careers page.",
+      "contact hr": "You can reach our HR team via hr@brightbot.lk for recruitment inquiries.",
+      "salary": "Salaries depend on the role and experience level. Details are discussed during interviews.",
+      "benefits": "We offer medical coverage, performance bonuses, paid leave, and flexible work options.",
+      "remote work": "Some positions offer hybrid or remote work options depending on the department.",
+      "onboarding": "Once selected, you’ll receive an onboarding email with all next steps and required documents."
     };
 
     function sendMessage() {
-      const inputField = document.getElementById("user-input");
-      const userText = inputField.value.trim();
-      if (!userText) return;
+      const input = document.getElementById("userInput");
+      const chat = document.getElementById("chat");
+      const userMsg = input.value.trim();
+      if (userMsg === "") return;
 
-      appendMessage(userText, "user");
-      inputField.value = "";
+      // Display user message
+      const userDiv = document.createElement("div");
+      userDiv.classList.add("message", "user");
+      userDiv.textContent = userMsg;
+      chat.appendChild(userDiv);
 
-      setTimeout(() => {
-        const response = getBotResponse(userText.toLowerCase());
-        appendMessage(response, "bot");
-      }, 400);
-    }
+      // Bot reply
+      const botDiv = document.createElement("div");
+      botDiv.classList.add("message", "bot");
 
-    function appendMessage(text, sender) {
-      const chatbox = document.getElementById("chatbox");
-      const msgDiv = document.createElement("div");
-      msgDiv.classList.add("message", sender);
-      msgDiv.textContent = text;
-      chatbox.appendChild(msgDiv);
-      chatbox.scrollTop = chatbox.scrollHeight;
-    }
-
-    function getBotResponse(input) {
-      for (const key in faq) {
-        if (input.includes(key)) {
-          return faq[key];
+      let found = false;
+      for (const key in faqs) {
+        if (userMsg.toLowerCase().includes(key)) {
+          botDiv.textContent = faqs[key];
+          found = true;
+          break;
         }
       }
-      return "Sorry, I don't have an answer for that yet. Try asking about applications, interviews, or offers!";
+
+      if (!found) {
+        botDiv.textContent =
+          "I'm not sure about that 🤔 — but you can email our HR team at hr@brightbot.lk for more details.";
+      }
+
+      chat.appendChild(botDiv);
+      input.value = "";
+      chat.scrollTop = chat.scrollHeight;
     }
 
-    document.getElementById("user-input").addEventListener("keypress", function (e) {
+    // Send message when pressing Enter
+    document.getElementById("userInput").addEventListener("keypress", function (e) {
       if (e.key === "Enter") sendMessage();
     });
   </script>
-
 </body>
 </html>
