@@ -1,8 +1,0 @@
-ID,Category,Question,Answer,Audience,Owner,Reviewed,Keywords,Priority,Channel
-TA-001,Job Search,How can I apply for a job?,Visit our Careers page and click “Apply.”,Candidate,Recruiter,2025-11-01,apply,High,Web
-TA-002,Job Search,Can I apply for multiple positions?,Yes, you can apply for more than one role.,Candidate,Recruiter,2025-11-01,multiple jobs,Medium,Web
-TA-006,Interview,What happens after I apply?,HR team reviews and contacts shortlisted candidates.,Candidate,Recruiter Lead,2025-11-01,next steps,High,Web
-TA-014,Offer,When will I receive an offer?,Within 1–2 weeks post final interview.,Candidate,TA Manager,2025-11-01,offer timeline,High,Web
-TA-018,Onboarding,Do you conduct background checks?,Yes, standard checks are conducted.,Candidate,HR Admin,2025-11-01,background,High,Web
-TA-023,Policy,What is your Equal Opportunity policy?,We are an equal opportunity employer.,Candidate,Legal/HR,2025-11-01,diversity,High,Web
-TA-025,Policy,Who can I contact for help?,Email careers@yourcompany.com,All,Recruitment,2025-11-01,contact,High,Web
