@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrightBot - Recruitment Chat Assistant</title>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #f8faff 0%, #e8f1ff 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    h1 {
+      color: #0052cc;
+      margin-bottom: 10px;
+    }
+    .chat-container {
+      background: #fff;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+    .chat-box {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .message {
+      padding: 12px 16px;
+      margin: 8px 0;
+      border-radius: 18px;
+      max-width: 75%;
+      line-height: 1.4em;
+      word-wrap: break-word;
+      animation: fadeIn 0.2s ease-in;
+    }
+    .user {
+      background: #0078d7;
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+    .bot {
+      background: #f1f0f0;
+      color: #333;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    .input-area {
+      display: flex;
+      border-top: 1px solid #ddd;
+      background: #fff;
+    }
+    input {
+      flex: 1;
+      border: none;
+      padding: 15px;
+      font-size: 16px;
+      border-radius: 0 0 0 20px;
+    }
+    input:focus { outline: none; }
+    button {
+      border: none;
+      background: #0078d7;
+      color: white;
+      padding: 0 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+      border-radius: 0 0 20px 0;
+    }
+    button:hover { background: #005fa3; }
+
+    .typing {
+      font-style: italic;
+      color: gray;
+      padding: 10px;
+      font-size: 14px;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💬 BrightBot Recruitment Chat</h1>
+  <div class="chat-container">
+    <div id="chat-box" class="chat-box">
+      <div class="message bot">
+        Hi! 👋 I'm <b>BrightBot</b>. Ask me anything about recruitment, interviews, or onboarding.
+      </div>
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="user-input" placeholder="Type your question here..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chat-box");
+    const inputField = document.getElementById("user-input");
+
+    // --- FAQ Knowledge Base ---
+    const faq = [
+      { q: ["how can i apply", "apply for a job"], a: "You can apply through our Careers page by clicking 'Apply' and submitting your resume." },
+      { q: ["apply multiple", "more than one position"], a: "Yes, you can apply for multiple roles if your qualifications match." },
+      { q: ["after i apply", "what happens next"], a: "Our HR team reviews your application and will contact you if you're shortlisted." },
+      { q: ["interview format", "types of interview"], a: "We conduct online, phone, or in-person interviews depending on the position." },
+      { q: ["assessment", "test"], a: "Some roles include an online or written assessment as part of the process." },
+      { q: ["how long", "duration"], a: "The full hiring process usually takes around 4–6 weeks." },
+      { q: ["offer", "when will i get my offer"], a: "Offers are sent within 1–2 weeks after the final interview." },
+      { q: ["background", "verification"], a: "Yes, all employees undergo background verification." },
+      { q: ["equal opportunity", "diversity"], a: "We are an equal opportunity employer and treat all applicants fairly." },
+      { q: ["contact", "help"], a: "You can reach HR at careers@yourcompany.com or call +94 11 123 4567." },
+      { q: ["hello", "hi", "hey"], a: "Hello there! 👋 How can I assist you today?" },
+      { q: ["thank", "thanks"], a: "You're most welcome! 😊 Anything else you'd like to know?" }
+    ];
+
+    function appendMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("message", sender);
+      msg.innerHTML = text;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function botTypingIndicator(show) {
+      if (show) {
+        const typing = document.createElement("div");
+        typing.classList.add("typing");
+        typing.id = "typing";
+        typing.textContent = "BrightBot is typing...";
+        chatBox.appendChild(typing);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } else {
+        const typing = document.getElementById("typing");
+        if (typing) typing.remove();
+      }
+    }
+
+    function getBotResponse(input) {
+      const cleaned = input.toLowerCase();
+      for (const item of faq) {
+        if (item.q.some(keyword => cleaned.includes(keyword))) {
+          return item.a;
+        }
+      }
+      return "Hmm 🤔 I’m not sure about that yet. Try asking about applying, interviews, or offers!";
+    }
+
+    function sendMessage() {
+      const userText = inputField.value.trim();
+      if (!userText) return;
+
+      appendMessage(userText, "user");
+      inputField.value = "";
+
+      botTypingIndicator(true);
+
+      setTimeout(() => {
+        botTypingIndicator(false);
+        const response = getBotResponse(userText);
+        appendMessage(response, "bot");
+      }, 800);
+    }
+
+    inputField.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>
